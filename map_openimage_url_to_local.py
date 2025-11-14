@@ -14,13 +14,23 @@ Supports two input formats:
 import os
 import csv
 import json
+import argparse
 from tqdm import tqdm
 
-is_multi_turn = False  # <-- Set to True for multi-turn format
-metadata_csv = "openimages/train-images-boxable-with-rotation.csv"
-jsonl_in = "openimages/sft.jsonl"  # or preference.jsonl or multi-turn.jsonl;change to your actual file path
-jsonl_out = "openimages/sft_with_local_source_image_path.jsonl" # change to your actual desired file path
-image_root = "openimages/openimage_source_images"  # parent folder containing train_*/ folders; change to your actual file path
+# Parse command line arguments
+parser = argparse.ArgumentParser(description="Map Open Images URLs to local file paths")
+parser.add_argument("--metadata_csv", required=True, help="Path to metadata CSV file")
+parser.add_argument("--jsonl_in", required=True, help="Input JSONL file")
+parser.add_argument("--jsonl_out", required=True, help="Output JSONL file")
+parser.add_argument("--image_root", required=True, help="Root directory containing image files")
+parser.add_argument("--is_multi_turn", action="store_true", help="Use multi-turn format")
+args = parser.parse_args()
+
+is_multi_turn = args.is_multi_turn
+metadata_csv = args.metadata_csv
+jsonl_in = args.jsonl_in
+jsonl_out = args.jsonl_out
+image_root = args.image_root
 
 
 print("📘 Loading metadata mapping (URL → ImageID)...")
