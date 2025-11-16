@@ -19,7 +19,7 @@ MODEL_NAME = "Qwen/Qwen3-30B-A3B-Instruct-2507-FP8"
 SERVER_URL = os.environ.get("SGLANG_SERVER_URL", "http://127.0.0.1:12345/v1/chat/completions")
 API_KEY = os.environ.get("SGLANG_API_KEY", "EMPTY")
 MAX_NEW_TOKENS = int(os.environ.get("LLM_MAX_NEW_TOKENS", "1024"))
-DEFAULT_MAX_WORKERS = 6
+DEFAULT_MAX_WORKERS = 32
 MAX_WORKERS = int(os.environ.get("LLM_MAX_WORKERS", str(DEFAULT_MAX_WORKERS)))
 REQUEST_TIMEOUT = int(os.environ.get("LLM_REQUEST_TIMEOUT", "120"))
 MAX_RETRIES = int(os.environ.get("LLM_MAX_RETRIES", "3"))
@@ -41,10 +41,10 @@ _REQUEST_PROXIES = {"http": None, "https": None}
 def _build_prompt(text_description: str, summary_description: str) -> str:
     return f"""
 You are an expert vision editor. Analyze the following image editing instruction.
-- Determine if the primary action is to \"add\" or \"remove\" an object (use \"other\" when neither).
-- Identify the object being added or removed.
-- Provide a confidence score from 0 to 10.
-Return ONLY valid JSON with keys \"action\", \"object_name\", \"confidence_score\". The value of \"object_name\" must wrap each object in double brackets as [[OBJECT_NAME:<name>]], and if multiple objects are mentioned they must be separated by semicolons.
+- Determine if the primary action is to \"add\" or \"remove\" a single, concrete physical object. If the change is NOT about a specific object (e.g., sky/background/lighting/weather/color tone/texture) or it involves multiple objects, use \"other\".
+- Identify the object being added or removed (only one object; if invalid or non-object, output \"[[OBJECT_NAME:INVALID]]\").
+- Provide a confidence score from 0 to 10 (lower confidence for non-object or multi-object instructions).
+Return ONLY valid JSON with keys \"action\", \"object_name\", \"confidence_score\". The value of \"object_name\" must wrap the object in double brackets as [[OBJECT_NAME:<name>]]. If multiple or invalid objects are mentioned, use exactly \"[[OBJECT_NAME:INVALID]]\" and set action=\"other\".
 
 Instruction: \"{text_description}\"
 Summary: \"{summary_description}\"
@@ -158,11 +158,7 @@ def process_item(idx: int, item: dict):
 
 def main():
     analysis_results = []
-    filtered_items = [
-        (idx, item)
-        for idx, item in enumerate(data_all)
-        if any(k in (item.get('edit_type') or "").lower() for k in OBJECT_ADD_KEYWORDS + OBJECT_REMOVE_KEYWORDS)
-    ]
+    filtered_items = list(enumerate(data_all))
 
     if not filtered_items:
         print("No entries matched the add/remove object criteria.")
