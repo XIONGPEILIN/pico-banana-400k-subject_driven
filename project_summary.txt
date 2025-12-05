@@ -1,0 +1,37 @@
+# 项目工作总结
+
+## 1. 项目目标
+构建一个基于 **Flux** 和 **Segment Anything 2 (SAM2)** 的主体驱动图像编辑与生成流水线，旨在通过自然语言描述自动提取图像中的主体，并将其放置在新的背景中或进行特定的编辑。
+
+## 2. 核心技术路线
+*   **模型架构**: 
+    *   **生成模型**: Flux (Black Forest Labs) 配合专门的 LoRA (`Kontext-Top-Down-View`)。
+    *   **分割模型**: SAM2 (Segment Anything Model 2)。
+    *   **指令模型**: Qwen (用于解析用户指令和提取对象信息)。
+
+*   **关键流程**:
+    1.  **数据解析**: 将原始模型输出解析为结构化数据 (`bbox_results.json`)。
+    2.  **对象提取与定位 (关键修正)**: 
+        *   利用 LLM 提取需要编辑的目标对象信息。
+        *   **SAM2 输入方式**: 使用 **Bounding Box (检测框)** 作为提示输入给 SAM2 模型进行分割，而非单点输入。这能更准确地覆盖物体区域。
+    3.  **图像生成**:
+        *   **Replace**: 移除原物体，生成新物体。
+        *   **Remove**: 仅移除物体并进行背景修复。
+        *   **Add**: 在指定位置添加新物体。
+    4.  **分布式处理**: 使用 `accelerate` 和 `torch.multiprocessing` 进行多 GPU 并行加速。
+
+## 3. 近期代码变更与状态
+*   **脚本开发**:
+    *   `batch_extract_and_generate.py`: 核心批量处理脚本，集成了 SAM2 分割和 Flux 生成逻辑。
+    *   `object_extractor.py`: 实现了基于 LLM 的对象提取逻辑。
+    *   `batch_top_down.py`: 实现了将场景转换为俯视视角的独立脚本。
+    *   `speed.sh`: 网络与处理速度测试工具。
+*   **数据文件**:
+    *   处理并维护了大规模的数据索引文件 `bbox_results.json` 和 `bbox_results_processed.json`。
+    *   建立了详细的错误日志系统 (`bbox_errors.json`)。
+*   **可视化与测试**:
+    *   开发了 `view_bbox.ipynb` 和 `visualize_bbox_results.py` 用于验证 Bounding Box 和分割 Mask 的准确性。
+
+## 4. 当前待办/进行中
+*   **调试**: 正在对 `batch_extract_and_generate.py` 进行频繁的调试和逻辑优化。
+*   **验证**: 检查分割掩码 (Mask) 的质量以及 Flux 生成图像的对齐和光影效果。

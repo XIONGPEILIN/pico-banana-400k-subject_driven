@@ -1,98 +1,1418 @@
 [
   {
-    "timestamp": "2025-11-14T11:29:41.286324+00:00",
-    "item_index": 21,
+    "timestamp": "2025-11-16T14:26:47.022692+00:00",
+    "item_index": 136,
     "message": "[ERROR] Failed to parse JSON from content.",
     "details": {
-      "content": "{\n  \"action\": \"add\",\n  \"object_name\": [[OBJECT_NAME:small, dark grey, cylindrical planter with vibrant green leafy plant]],\n  \"confidence_score\": 10\n}"
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
     }
   },
   {
-    "timestamp": "2025-11-14T11:45:42.410285+00:00",
-    "item_index": 46147,
+    "timestamp": "2025-11-16T14:27:24.398039+00:00",
+    "item_index": 524,
     "message": "[ERROR] Failed to parse JSON from content.",
     "details": {
-      "content": "{\n  \"action\": \"add\",\n  \"object_name\": [[OBJECT_NAME:person]],\n  \"confidence_score\": 10\n}"
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
     }
   },
   {
-    "timestamp": "2025-11-14T11:52:56.828079+00:00",
-    "item_index": 66895,
+    "timestamp": "2025-11-16T14:27:26.172174+00:00",
+    "item_index": 555,
     "message": "[ERROR] Failed to parse JSON from content.",
     "details": {
-      "content": "{\n  \"action\": \"add\",\n  \"object_name\": [[OBJECT_NAME:mallard duck]],\n  \"confidence_score\": 10\n}"
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
     }
   },
   {
-    "timestamp": "2025-11-14T11:59:02.335829+00:00",
-    "item_index": 84635,
+    "timestamp": "2025-11-16T14:29:48.692892+00:00",
+    "item_index": 2328,
     "message": "[ERROR] Failed to parse JSON from content.",
     "details": {
-      "content": "{\n  \"action\": \"add\",\n  \"object_name\": [[OBJECT_NAME:stone carving]],\n  \"confidence_score\": 10\n}"
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
     }
   },
   {
-    "timestamp": "2025-11-14T12:14:48.634187+00:00",
-    "item_index": 129933,
+    "timestamp": "2025-11-16T14:29:50.994637+00:00",
+    "item_index": 2359,
     "message": "[ERROR] Failed to parse JSON from content.",
     "details": {
-      "content": "{\n  \"action\": \"add\",\n  \"object_name\": [[OBJECT_NAME:gray squirrel]],\n  \"confidence_score\": 10\n}"
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
     }
   },
   {
-    "timestamp": "2025-11-14T12:15:53.179290+00:00",
-    "item_index": 133043,
+    "timestamp": "2025-11-16T14:30:37.810951+00:00",
+    "item_index": 2922,
     "message": "[ERROR] Failed to parse JSON from content.",
     "details": {
-      "content": "{\n  \"action\": \"add\",\n  \"object_name\": [[OBJECT_NAME:small, light brown, oval-shaped object]],\n  \"confidence_score\": 10\n}"
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
     }
   },
   {
-    "timestamp": "2025-11-14T12:25:25.533479+00:00",
-    "item_index": 161153,
+    "timestamp": "2025-11-16T14:31:09.873288+00:00",
+    "item_index": 3328,
     "message": "[ERROR] Failed to parse JSON from content.",
     "details": {
-      "content": "{\n  \"action\": \"add\",\n  \"object_name\": [[OBJECT_NAME:small, dark-colored vintage-style guitar amplifier]],\n  \"confidence_score\": 10\n}"
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
     }
   },
   {
-    "timestamp": "2025-11-14T12:26:30.344906+00:00",
-    "item_index": 164641,
+    "timestamp": "2025-11-16T14:31:19.424283+00:00",
+    "item_index": 3446,
     "message": "[ERROR] Failed to parse JSON from content.",
     "details": {
-      "content": "{\n  \"action\": \"add\",\n  \"object_name\": [[OBJECT_NAME:radish]], \n  \"confidence_score\": 10\n}"
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
     }
   },
   {
-    "timestamp": "2025-11-14T12:27:19.863014+00:00",
-    "item_index": 166891,
+    "timestamp": "2025-11-16T14:32:28.629854+00:00",
+    "item_index": 4310,
     "message": "[ERROR] Failed to parse JSON from content.",
     "details": {
-      "content": "{\n  \"action\": \"add\",\n  \"object_name\": [[OBJECT_NAME:beetle]],\n  \"confidence_score\": 10\n}"
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
     }
   },
   {
-    "timestamp": "2025-11-14T12:29:09.656697+00:00",
-    "item_index": 172207,
-    "message": "[WARN] No JSON block found in response.",
+    "timestamp": "2025-11-16T14:36:02.901290+00:00",
+    "item_index": 6958,
+    "message": "[ERROR] Failed to parse JSON from content.",
     "details": {
-      "content": "Fill the empty space with candies from the containers, blending smoothly."
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
     }
   },
   {
-    "timestamp": "2025-11-14T12:34:29.816393+00:00",
-    "item_index": 187632,
+    "timestamp": "2025-11-16T14:38:23.340527+00:00",
+    "item_index": 8686,
     "message": "[ERROR] Failed to parse JSON from content.",
     "details": {
-      "content": "{\n  \"action\": \"add\",\n  \"object_name\": [[OBJECT_NAME:hot air balloon]],\n  \"confidence_score\": 10\n}"
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
     }
   },
   {
-    "timestamp": "2025-11-14T12:35:36.488310+00:00",
-    "item_index": 190808,
+    "timestamp": "2025-11-16T14:40:22.577580+00:00",
+    "item_index": 10189,
     "message": "[ERROR] Failed to parse JSON from content.",
     "details": {
-      "content": "{\n  \"action\": \"add\",\n  \"object_name\": [[OBJECT_NAME:casually dressed person]],\n  \"confidence_score\": 10\n}"
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T14:41:46.103572+00:00",
+    "item_index": 11217,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T14:41:51.271127+00:00",
+    "item_index": 11289,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T14:42:20.032515+00:00",
+    "item_index": 11638,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T14:45:44.311231+00:00",
+    "item_index": 14152,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T14:46:27.009051+00:00",
+    "item_index": 14725,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 6}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T14:52:53.414752+00:00",
+    "item_index": 19567,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T14:57:21.589459+00:00",
+    "item_index": 22895,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T14:57:56.947666+00:00",
+    "item_index": 23274,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T14:58:08.925618+00:00",
+    "item_index": 23430,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T14:59:16.215428+00:00",
+    "item_index": 24268,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 3}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T14:59:50.308862+00:00",
+    "item_index": 24702,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T14:59:59.611285+00:00",
+    "item_index": 24812,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:01:13.086880+00:00",
+    "item_index": 25753,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:02:10.533498+00:00",
+    "item_index": 26485,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:06:17.881658+00:00",
+    "item_index": 29468,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:08:20.168485+00:00",
+    "item_index": 31091,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:12:01.588248+00:00",
+    "item_index": 33827,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:14:30.226728+00:00",
+    "item_index": 35688,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:15:13.072123+00:00",
+    "item_index": 36109,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:17:24.284323+00:00",
+    "item_index": 37851,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:19:26.909412+00:00",
+    "item_index": 39240,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:21:08.864706+00:00",
+    "item_index": 40504,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:24:54.449007+00:00",
+    "item_index": 43310,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:25:24.096296+00:00",
+    "item_index": 43680,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:26:17.419157+00:00",
+    "item_index": 44346,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:28:17.575583+00:00",
+    "item_index": 46025,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:28:27.566593+00:00",
+    "item_index": 46149,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:30:13.402350+00:00",
+    "item_index": 47268,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:31:37.783677+00:00",
+    "item_index": 48314,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:33:12.762523+00:00",
+    "item_index": 49488,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:34:08.499493+00:00",
+    "item_index": 50180,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:34:26.909748+00:00",
+    "item_index": 50599,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:35:53.587336+00:00",
+    "item_index": 51478,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:36:44.573035+00:00",
+    "item_index": 52118,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:38:07.633851+00:00",
+    "item_index": 53142,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 6}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:42:32.302556+00:00",
+    "item_index": 56426,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:46:12.574227+00:00",
+    "item_index": 59144,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:46:44.653300+00:00",
+    "item_index": 59540,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:47:49.294774+00:00",
+    "item_index": 60338,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:51:23.352089+00:00",
+    "item_index": 63218,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:51:45.179210+00:00",
+    "item_index": 63491,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 6}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:51:50.769739+00:00",
+    "item_index": 63310,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:51:55.124748+00:00",
+    "item_index": 63370,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:51:58.693651+00:00",
+    "item_index": 63411,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:53:16.811596+00:00",
+    "item_index": 64382,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:54:49.572077+00:00",
+    "item_index": 65518,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T15:59:35.830435+00:00",
+    "item_index": 69063,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:00:23.859015+00:00",
+    "item_index": 69664,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:00:25.528682+00:00",
+    "item_index": 69681,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:00:54.573162+00:00",
+    "item_index": 70339,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:01:17.088948+00:00",
+    "item_index": 70326,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:02:50.706550+00:00",
+    "item_index": 71789,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:04:47.876964+00:00",
+    "item_index": 72944,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:05:01.286744+00:00",
+    "item_index": 73112,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:05:01.949601+00:00",
+    "item_index": 73419,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 6}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:11:00.985826+00:00",
+    "item_index": 77606,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 3}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:11:19.913359+00:00",
+    "item_index": 77844,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:13:07.565712+00:00",
+    "item_index": 79176,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:14:48.121742+00:00",
+    "item_index": 80449,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:25:46.946519+00:00",
+    "item_index": 88631,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:27:55.390437+00:00",
+    "item_index": 90226,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:29:28.141985+00:00",
+    "item_index": 91386,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:31:43.321350+00:00",
+    "item_index": 93076,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:36:26.251580+00:00",
+    "item_index": 96554,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:36:27.691497+00:00",
+    "item_index": 96936,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:37:30.793925+00:00",
+    "item_index": 97362,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:42:17.091739+00:00",
+    "item_index": 100932,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:46:37.753983+00:00",
+    "item_index": 104184,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:47:06.755191+00:00",
+    "item_index": 104548,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:50:40.481288+00:00",
+    "item_index": 107507,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 6}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:53:09.113196+00:00",
+    "item_index": 109016,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:53:37.495742+00:00",
+    "item_index": 109374,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:55:22.855439+00:00",
+    "item_index": 110687,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:56:05.674767+00:00",
+    "item_index": 111222,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T16:59:27.308264+00:00",
+    "item_index": 113718,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:02:11.058243+00:00",
+    "item_index": 115750,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:04:58.519991+00:00",
+    "item_index": 117824,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:05:01.287200+00:00",
+    "item_index": 117793,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:06:39.631398+00:00",
+    "item_index": 119019,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:08:10.579808+00:00",
+    "item_index": 120154,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:13:06.477255+00:00",
+    "item_index": 123861,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:18:43.466951+00:00",
+    "item_index": 128048,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:22:13.095635+00:00",
+    "item_index": 130661,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:28:00.727710+00:00",
+    "item_index": 134995,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:28:29.703854+00:00",
+    "item_index": 135361,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:29:44.126808+00:00",
+    "item_index": 136224,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:29:46.487302+00:00",
+    "item_index": 136315,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:30:36.478397+00:00",
+    "item_index": 136860,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:32:08.375178+00:00",
+    "item_index": 138014,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 6}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:36:44.784074+00:00",
+    "item_index": 141471,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:37:05.317006+00:00",
+    "item_index": 141724,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 6}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:37:56.523863+00:00",
+    "item_index": 142316,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:38:52.687134+00:00",
+    "item_index": 143021,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:39:57.457395+00:00",
+    "item_index": 143830,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:39:58.615790+00:00",
+    "item_index": 143842,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:40:49.451937+00:00",
+    "item_index": 144472,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:41:45.902696+00:00",
+    "item_index": 145182,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:43:26.113089+00:00",
+    "item_index": 146434,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:44:02.714574+00:00",
+    "item_index": 146884,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:45:57.357018+00:00",
+    "item_index": 148306,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:46:48.122981+00:00",
+    "item_index": 148775,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:47:46.195609+00:00",
+    "item_index": 149387,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:48:53.933125+00:00",
+    "item_index": 150466,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:52:29.060804+00:00",
+    "item_index": 153112,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:53:47.737313+00:00",
+    "item_index": 153907,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:57:47.621126+00:00",
+    "item_index": 157036,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:58:04.589340+00:00",
+    "item_index": 157123,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:58:56.336523+00:00",
+    "item_index": 157890,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T17:59:22.721857+00:00",
+    "item_index": 158097,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:03:46.076251+00:00",
+    "item_index": 161516,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:07:59.467692+00:00",
+    "item_index": 164515,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:14:15.455780+00:00",
+    "item_index": 169241,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:16:15.412500+00:00",
+    "item_index": 170814,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:17:19.823814+00:00",
+    "item_index": 171535,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:18:31.727199+00:00",
+    "item_index": 172496,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:18:39.418253+00:00",
+    "item_index": 172598,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:29:59.677285+00:00",
+    "item_index": 180813,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:30:08.293284+00:00",
+    "item_index": 181068,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:30:24.739454+00:00",
+    "item_index": 181267,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:30:26.360078+00:00",
+    "item_index": 181135,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:31:43.095388+00:00",
+    "item_index": 182077,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:34:01.621498+00:00",
+    "item_index": 183772,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:36:47.571969+00:00",
+    "item_index": 185832,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:38:20.723004+00:00",
+    "item_index": 187158,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 3}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:38:29.400016+00:00",
+    "item_index": 187268,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:39:40.142797+00:00",
+    "item_index": 188138,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:40:17.641639+00:00",
+    "item_index": 188610,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:44:10.822158+00:00",
+    "item_index": 191489,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:46:21.005454+00:00",
+    "item_index": 193104,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 6}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:47:01.475796+00:00",
+    "item_index": 193604,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:48:45.555830+00:00",
+    "item_index": 194874,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:49:26.747996+00:00",
+    "item_index": 195177,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:50:11.395942+00:00",
+    "item_index": 195721,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 6}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:55:42.912614+00:00",
+    "item_index": 200050,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:56:47.346988+00:00",
+    "item_index": 200577,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:56:54.551719+00:00",
+    "item_index": 200938,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 6}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:57:18.005358+00:00",
+    "item_index": 201238,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:57:39.133113+00:00",
+    "item_index": 201488,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:57:47.693920+00:00",
+    "item_index": 201594,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T18:58:23.006037+00:00",
+    "item_index": 202018,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:00:43.534518+00:00",
+    "item_index": 203744,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:02:29.611239+00:00",
+    "item_index": 205048,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:07:14.646097+00:00",
+    "item_index": 208321,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:09:19.219973+00:00",
+    "item_index": 209847,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:09:23.505299+00:00",
+    "item_index": 210202,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:09:25.718960+00:00",
+    "item_index": 209929,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:10:45.889543+00:00",
+    "item_index": 211216,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 6}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:11:04.404186+00:00",
+    "item_index": 211145,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 3}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:12:26.083401+00:00",
+    "item_index": 212464,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:12:50.651931+00:00",
+    "item_index": 212766,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 6}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:13:28.074418+00:00",
+    "item_index": 213220,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:17:58.949134+00:00",
+    "item_index": 216576,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:18:57.945540+00:00",
+    "item_index": 216919,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 6}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:20:42.829523+00:00",
+    "item_index": 218586,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:22:47.362196+00:00",
+    "item_index": 219749,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:22:59.910697+00:00",
+    "item_index": 220264,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:25:16.049676+00:00",
+    "item_index": 221573,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:25:38.779191+00:00",
+    "item_index": 222240,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:26:32.346246+00:00",
+    "item_index": 222902,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:26:41.512401+00:00",
+    "item_index": 223012,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:27:10.566766+00:00",
+    "item_index": 222975,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:28:22.186321+00:00",
+    "item_index": 224276,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T19:30:47.942589+00:00",
+    "item_index": 226080,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 0}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T20:13:00.466704+00:00",
+    "item_index": 256118,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
+    }
+  },
+  {
+    "timestamp": "2025-11-16T20:13:27.998509+00:00",
+    "item_index": 256438,
+    "message": "[ERROR] Failed to parse JSON from content.",
+    "details": {
+      "content": "{\"action\": \"replace\", \"object_name\": [[OBJECT_NAME:INVALID]], \"confidence_score\": 8}"
     }
   }
 ]

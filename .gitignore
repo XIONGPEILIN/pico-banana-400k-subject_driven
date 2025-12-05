@@ -1,2 +1,23 @@
 .venv
 openimages
+sam_segmentation_results
+analysis_results.json
+bbox_results.json
+subject
+extracted_objects
+All
+parsed_model_outputs
+test
+test_think
+*.json
+bbox_results_processed.json
+bbox_results.json
+bbox_errors.json
+Kontext-Photo-Mate-v2
+__pycache__
+sam3
+
+# Large data files
+bbox_results.json
+bbox_results_processed.json
+bbox_errors.json

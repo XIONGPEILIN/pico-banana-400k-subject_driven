@@ -1,7 +1,6 @@
-export CUDA_VISIBLE_DEVICES="0,1"
+CUDA_DEVICE_ORDER="PCI_BUS_ID" CUDA_VISIBLE_DEVICES="1,2,3,4" vllm serve Qwen/Qwen3-VL-235B-A22B-Instruct-FP8   --tensor-parallel-size 4   --limit-mm-per-prompt.video 0 --port 7512
 
-python -m sglang.launch_server \
-    --model-path Qwen/Qwen3-30B-A3B-Instruct-2507-FP8 \
-    --context-length 32768 \
-    --dp 2 \
-    --port 12345
+
+
+
+
