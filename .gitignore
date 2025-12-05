@@ -21,3 +21,6 @@ sam3
 bbox_results.json
 bbox_results_processed.json
 bbox_errors.json
+
+# Temporary files
+tmp/
