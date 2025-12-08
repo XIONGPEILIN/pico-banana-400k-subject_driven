@@ -15,7 +15,7 @@ bbox_results.json
 bbox_errors.json
 Kontext-Photo-Mate-v2
 __pycache__
-sam3
+# sam3
 
 # Large data files
 bbox_results.json
