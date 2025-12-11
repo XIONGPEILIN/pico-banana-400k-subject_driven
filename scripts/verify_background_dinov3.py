@@ -1,384 +1,589 @@
 import os
-os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+import time
 import json
 import glob
-import random
-import shutil
 import torch
 import torch.nn.functional as F
 import numpy as np
 from PIL import Image
 from tqdm import tqdm
-from transformers import AutoImageProcessor, AutoModel
+from transformers import pipeline, AutoImageProcessor, AutoModel
+import torch.multiprocessing as mp
+import torchvision.transforms as transforms
+from torch.utils.data import Dataset, DataLoader
+from concurrent.futures import ProcessPoolExecutor, as_completed
+
 # --- Configuration ---
-# Model Name provided by user
 MODEL_NAME = "facebook/dinov3-vit7b16-pretrain-lvd1689m"
-# Directory containing the logs and masks
-WORK_DIR = "openimages/agent_full_pipeline_merged_ALL"
+# Directory containing logs, masks, images
+WORK_DIR = "openimages/pico_sam_output_ALL_20251206_032609"
+# Where to save audit JSONs (no file copying)
+DEST_DIR = os.path.join("openimages", "dino_mask_audit")
 
-# Thresholds (can be tuned later based on distribution)
-# GLOBAL_SIM_THRESHOLD = 0.85 
+# Thresholds
+OBJECT_SIM_THRESHOLD = 0.9        # object unchanged if >=
+BACKGROUND_SIM_THRESHOLD = 0.9    # background changed if <
 
-def load_dinov3():
-    print(f"Loading model: {MODEL_NAME}...")
+# Limit number of items to process (None for all)
+MAX_ITEMS = None
+
+def get_available_devices():
+    if torch.cuda.is_available():
+        vis = os.environ.get("CUDA_VISIBLE_DEVICES")
+        if vis:
+            ids = [d.strip() for d in vis.split(",") if d.strip()]
+            devices = [f"cuda:{i}" for i in range(len(ids))]
+        else:
+            devices = [f"cuda:{i}" for i in range(torch.cuda.device_count())]
+    else:
+        devices = ["cpu"]
+    return devices
+
+
+# Helper functions
+def _load_image(path):
+    return Image.open(path).convert("RGB")
+
+def _apply_mask_to_image(image_pil, mask_tensor, fill_color=(0, 0, 0)):
+    """
+    Applies a binary mask tensor to a PIL image. Areas where the mask is 0 are filled with fill_color.
+    Args:
+        image_pil: PIL Image (RGB).
+        mask_tensor: Torch tensor of shape (1, 1, H, W) with values 0 or 1, on the same device as the model.
+        fill_color: RGB tuple for the color to fill masked-out regions.
+    Returns:
+        PIL Image with mask applied.
+    """
+    # Ensure mask_tensor is on CPU and converted to numpy
+    # Squeeze to (H, W) for image operations
+    mask_np = mask_tensor.squeeze().cpu().numpy()
+    
+    # Resize mask_np to match image_pil size if necessary
+    # (mask_tensor could be at a different resolution if it was interpolated from a sub-mask)
+    if mask_np.shape[0] != image_pil.height or mask_np.shape[1] != image_pil.width:
+        # Resize mask to image size using nearest-neighbor interpolation to maintain binary values
+        mask_pil = Image.fromarray((mask_np * 255).astype(np.uint8), mode='L')
+        mask_pil = mask_pil.resize(image_pil.size, Image.NEAREST)
+        mask_np = np.array(mask_pil) / 255.0 # Convert back to 0-1 float
+    
+    # Convert image to numpy array (normalize to 0-1 float for calculation)
+    image_np = np.array(image_pil).astype(np.float32) / 255.0
+    
+    # Create a fill color array (normalize to 0-1 float)
+    fill_np = np.array(fill_color, dtype=np.float32) / 255.0
+    
+    # Apply mask: where mask_np is 0, use fill_np, otherwise use image_np
+    # This assumes mask_np is 0 for regions to be filled, 1 for regions to keep.
+    masked_image_np = image_np * mask_np[:, :, np.newaxis] + (1 - mask_np[:, :, np.newaxis]) * fill_np
+    
+    # Convert back to PIL Image (scale to 0-255 and convert to uint8)
+    masked_image_pil = Image.fromarray((masked_image_np * 255).astype(np.uint8), mode='RGB')
+    
+    return masked_image_pil
+
+
+def _get_patch_features(processor, model, image_pil, device):
+    """
+    Extracts DINO patch features from a PIL image.
+    Args:
+        processor: The DINO image processor.
+        model: The DINO model.
+        image_pil: The PIL Image to process.
+        device: The torch device.
+    Returns:
+        tuple: (patch_features_reshaped, grid_h, grid_w) or (None, None, None) on error.
+    """
+    try:
+        inputs = processor(images=image_pil, return_tensors="pt")
+        inputs = {k: v.to(device) for k, v in inputs.items()}
+
+        with torch.no_grad():
+            outputs = model(**inputs)
+        
+        # Get Last Hidden State: (Batch, Seq, Dim)
+        feat = outputs.last_hidden_state[0] # Assuming batch size 1
+        
+        # Calculate grid size from input tensor shape
+        h_in, w_in = inputs["pixel_values"].shape[-2:]
+        patch_size = 14 # Default for DINOv2, but model name says vit7b16 (likely 16)
+        if "16" in MODEL_NAME:
+            patch_size = 16
+        
+        grid_h = h_in // patch_size
+        grid_w = w_in // patch_size
+        
+        expected_tokens = grid_h * grid_w
+        
+        # Handling CLS token (and potential registers)
+        num_tokens = feat.shape[0]
+        if num_tokens == expected_tokens + 1: # 1 CLS token
+            patch_feat = feat[1:]
+        elif num_tokens == expected_tokens + 5: # 1 CLS + 4 Registers (common in DINOv2)
+            patch_feat = feat[5:]
+        else:
+             # Fallback: assume 1 CLS token if unsure, or return None if a mismatch
+             # For robustness, we'll try to use the most common case or just slice.
+             # A more robust check might involve logging a warning.
+             if num_tokens > expected_tokens: # Likely has CLS or registers
+                 patch_feat = feat[num_tokens - expected_tokens:]
+             else: # Mismatch, return None
+                 return None, None, None
+
+        # Reshape to grid for spatial mapping: (Grid_H, Grid_W, Dim)
+        if patch_feat.shape[0] == expected_tokens:
+             patch_feat = patch_feat.reshape(grid_h, grid_w, -1)
+             return patch_feat, grid_h, grid_w
+        else:
+             return None, None, None
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return None, None, None
+
+
+def _load_mask_tensor(path, device, size=None):
+    """
+    Loads a mask as a tensor on the specified device.
+    Args:
+        path: Path to mask image.
+        device: Torch device.
+        size: Tuple (W, H) to resize to (matching PIL size convention).
+    Returns:
+        Tensor of shape (1, 1, H, W) with values in [0, 1].
+    """
+    m = Image.open(path).convert("L") # Convert to grayscale
+        
+    # Use ToTensor to convert PIL to (C, H, W) tensor, then move to device
+    transform = transforms.ToTensor()
+    t = transform(m).to(device) # (1, H, W) on GPU
+    
+    # Add batch dimension: (1, 1, H, W)
+    t = t.unsqueeze(0)
+    
+    if size is not None:
+        # PIL size is (W, H), interpolate needs (H, W)
+        target_h, target_w = size[1], size[0]
+        if t.shape[-2:] != (target_h, target_w):
+            t = F.interpolate(t, size=(target_h, target_w), mode='nearest')
+            
+    return t
+
+
+def _get_bbox_mask(mask_tensor):
+    """
+    Given a mask tensor, returns a new tensor with 1s in the bounding box
+    of the original mask (aligned to patch size), and 0s elsewhere.
+    """
+    # Find non-zero indices (i.e., object pixels)
+    pts = torch.nonzero(mask_tensor[0, 0] > 0.5, as_tuple=True)
+    if len(pts[0]) == 0:
+        return torch.zeros_like(mask_tensor) # Return empty mask if no object found
+    
+    y_min, y_max = pts[0].min().item(), pts[0].max().item()
+    x_min, x_max = pts[1].min().item(), pts[1].max().item()
+    
+    # --- Align to 16x16 grid ---
+    patch_size = 16 
+
+    # Round down y_min and x_min to nearest multiple of patch_size
+    y_min_exp = (y_min // patch_size) * patch_size
+    x_min_exp = (x_min // patch_size) * patch_size
+    
+    # Round up y_max and x_max to nearest multiple of patch_size, then subtract 1 for inclusive indexing
+    y_max_exp = ((y_max + patch_size) // patch_size) * patch_size - 1 
+    x_max_exp = ((x_max + patch_size) // patch_size) * patch_size - 1
+    
+    # Boundary checks
+    H, W = mask_tensor.shape[-2:]
+    y_min_exp = max(0, y_min_exp)
+    y_max_exp = min(H - 1, y_max_exp)
+    x_min_exp = max(0, x_min_exp)
+    x_max_exp = min(W - 1, x_max_exp)
+    
+    # Create mask with 1s in the box
+    box_mask = torch.zeros_like(mask_tensor)
+    box_mask[:, :, y_min_exp : y_max_exp + 1, x_min_exp : x_max_exp + 1] = 1.0
+    
+    return box_mask
+
+
+# Helper to calculate cosine similarity between two tensor embeddings
+def _cosine_similarity_embeddings(emb_a, emb_b):
+    sim = F.cosine_similarity(emb_a, emb_b, dim=-1)
+    if sim.dim() > 0:
+        return sim.mean().item()
+    return sim.item()
+
+
+def audit_item(processor, model, img_before, img_after, item_dir, item_idx, device):
+    result = {"item_idx": item_idx, "results": {}}
+    
+    t0 = time.time()
+    
+    if img_before.size != img_after.size:
+        img_after = img_after.resize(img_before.size, Image.LANCZOS)
+
+    # 1. Pre-fill structure
+    # Global background check (using the union of ADD and REMOVE bboxes)
+    # We will compute the global background request dynamically later
+    result["results"]["global"] = {
+        "background_bbox_sim": None,
+        "background_changed": None,
+        "add_mask_path": None,
+        "remove_mask_path": None
+    }
+
+    for kind in ["remove", "add"]:
+        # Check for specific masks
+        kind_merged_path = os.path.join(item_dir, f"item_{item_idx}_MASK_{kind.upper()}.png")
+        if os.path.exists(kind_merged_path):
+             masks_dir = os.path.join(item_dir, f"final_masks_{kind}")
+             result["results"][kind] = {
+                "kind_merged_mask_path": kind_merged_path,
+                "sub_masks_dir": masks_dir if os.path.isdir(masks_dir) else None,
+                "sub_mask_results": []
+             }
+             # Store path in global for reference
+             if kind == "add":
+                 result["results"]["global"]["add_mask_path"] = kind_merged_path
+             else:
+                 result["results"]["global"]["remove_mask_path"] = kind_merged_path
+
+    # 2. Extract Features (ONCE for original images)
+    # Use the new helper function
+    patch_feat_a, grid_h, grid_w = _get_patch_features(processor, model, img_before, device)
+    patch_feat_b, _, _ = _get_patch_features(processor, model, img_after, device)
+
+    if patch_feat_a is None or patch_feat_b is None:
+        print(f"Warning: Could not extract features for item {item_idx}. Skipping.")
+        return result
+
+    # Helper to calculate similarity for a mask (now takes features as args)
+    def process_mask(current_patch_feat_a, current_patch_feat_b, current_grid_h, current_grid_w, mask_input, mask_type="sub_mask", return_map=False):
+        try:
+            # Prepare mask tensor (1, 1, H, W)
+            if isinstance(mask_input, str):
+                # Load from path
+                mask_tensor = _load_mask_tensor(mask_input, device, size=img_before.size) # Pass img_before.size to load mask at correct initial size
+            elif torch.is_tensor(mask_input):
+                mask_tensor = mask_input
+            else:
+                return None if not return_map else (None, None)
+            
+            # Resize mask to Feature Grid Size: (Gh, Gw)
+            # interpolate expects (Batch, Channels, H, W) -> mask_tensor is already (1, 1, H, W)
+            mask_small = F.interpolate(mask_tensor, size=(current_grid_h, current_grid_w), mode='bilinear', align_corners=False)
+            
+            # Create boolean mask (threshold)
+            keep_mask = (mask_small[0, 0] > 0.4) # Slightly lower threshold for soft resizing
+            
+            if keep_mask.sum() == 0:
+                return None if not return_map else (None, None)
+                
+            # Compute dense similarity map if requested or needed
+            if return_map:
+                # Dense cosine similarity (Grid_H, Grid_W)
+                sim_map = F.cosine_similarity(current_patch_feat_a, current_patch_feat_b, dim=-1)
+                # Apply mask to get average
+                avg_sim = sim_map[keep_mask].mean().item()
+                return avg_sim, sim_map
+            else:
+                # Average Pooling
+                emb_a = current_patch_feat_a[keep_mask].mean(dim=0)
+                emb_b = current_patch_feat_b[keep_mask].mean(dim=0)
+                return _cosine_similarity_embeddings(emb_a, emb_b)
+            
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            return None if not return_map else (None, None)
+
+
+    # 3. Process Requests (Masks)
+    
+    # Initialize union_mask for global background (will accumulate modified regions)
+    union_mask = None
+
+    # Process sub-masks first to filter out unmodified objects
+    for kind in ["remove", "add"]:
+        kind_mask_accum = None
+        has_valid_submasks = False
+
+        if kind in result["results"]:
+            data = result["results"][kind]
+            
+            # Check for sub-masks
+            if data["sub_masks_dir"] and os.path.isdir(data["sub_masks_dir"]):
+                sub_masks = sorted(glob.glob(os.path.join(data["sub_masks_dir"], "*.png")))
+                if sub_masks:
+                    has_valid_submasks = True
+                    for sm in sub_masks:
+                        # Load tensor
+                        m_tensor = _load_mask_tensor(sm, device, size=img_before.size)
+                        # Check similarity using original image features
+                        sim = process_mask(patch_feat_a, patch_feat_b, grid_h, grid_w, m_tensor, "sub_mask")
+                        
+                        if sim is not None:
+                            data["sub_mask_results"].append({
+                                "mask_path": sm,
+                                "cos_sim": sim,
+                                "object_unchanged": sim >= OBJECT_SIM_THRESHOLD
+                            })
+                            
+                            # Only add to union if MODIFIED (sim < Threshold)
+                            if sim < OBJECT_SIM_THRESHOLD:
+                                # Expand the bbox of the modified sub-mask and add to accumulator
+                                expanded_box_for_accum = _get_bbox_mask(m_tensor)
+                                if kind_mask_accum is None:
+                                    kind_mask_accum = expanded_box_for_accum
+                                else:
+                                    kind_mask_accum = torch.max(kind_mask_accum, expanded_box_for_accum)
+
+            # Fallback: If no sub-masks found, use the merged mask (assume modified)
+            if not has_valid_submasks:
+                merged_path = data["kind_merged_mask_path"]
+                if merged_path and os.path.exists(merged_path):
+                     m_tensor = _load_mask_tensor(merged_path, device, size=img_before.size)
+                     # Expand the bbox of the merged mask and add to accumulator
+                     kind_mask_accum = _get_bbox_mask(m_tensor)
+
+        # Combine into global exclusion mask (union of all expanded modified object bboxes)
+        if kind_mask_accum is not None:
+            if union_mask is None:
+                union_mask = kind_mask_accum
+            else:
+                union_mask = torch.max(union_mask, kind_mask_accum)
+
+    # --- Global Background Logic ---
+    # At this point, 'union_mask' represents the combined EXCLUSION zones (expanded object BBoxes).
+    if union_mask is not None:
+        # The background mask is simply the inverse of the exclusion mask.
+        bg_mask_tensor = 1.0 - union_mask
+        
+        # Ensure bg_mask_tensor is not all zeros (meaning union_mask didn't cover the whole image)
+        # If the entire image is excluded by expanded bboxes, then there's no background to audit.
+        if bg_mask_tensor.sum() == 0: 
+            bg_mask_tensor = None 
+        
+        if bg_mask_tensor is not None:
+             # Calculate percentage of image covered by background mask
+             # bg_mask_tensor is (1, 1, H, W) with 0s and 1s
+             bg_pixel_count = (bg_mask_tensor > 0.5).sum().item()
+             total_pixel_count = bg_mask_tensor.numel()
+             bg_ratio = bg_pixel_count / total_pixel_count if total_pixel_count > 0 else 0
+             result["results"]["global"]["bg_mask_ratio"] = bg_ratio
+
+             # Apply background mask to original images *before* feature extraction
+             masked_img_before = _apply_mask_to_image(img_before, bg_mask_tensor)
+             masked_img_after = _apply_mask_to_image(img_after, bg_mask_tensor)
+
+             # Extract features from the masked images for background comparison
+             bg_patch_feat_a, _, _ = _get_patch_features(processor, model, masked_img_before, device)
+             bg_patch_feat_b, _, _ = _get_patch_features(processor, model, masked_img_after, device)
+
+             if bg_patch_feat_a is not None and bg_patch_feat_b is not None:
+                 # Calculate similarity using features from masked images
+                 sim, sim_map = process_mask(bg_patch_feat_a, bg_patch_feat_b, grid_h, grid_w, bg_mask_tensor, "background", return_map=True)
+                 
+                 if sim is not None:
+                     result["results"]["global"]["background_bbox_sim"] = sim
+                     is_changed = sim < BACKGROUND_SIM_THRESHOLD
+                     result["results"]["global"]["background_changed"] = is_changed
+                     
+                     # If changed, save a debug mask visualization
+                     if is_changed and sim_map is not None:
+                         try:
+                             # sim_map is (Grid_H, Grid_W) on device
+                             # 1. Resize background mask to grid size to mask out object area in visualization
+                             bg_mask_small = F.interpolate(bg_mask_tensor, size=(grid_h, grid_w), mode='nearest')
+                             bg_bool = (bg_mask_small[0,0] > 0.5)
+                             
+                             # 2. Filter sim_map: Keep only background area, set rest to high similarity (1.0)
+                             # We want to highlight LOW similarity in the BACKGROUND.
+                             vis_map = torch.ones_like(sim_map) # Default 1.0 (White)
+                             vis_map[bg_bool] = sim_map[bg_bool]
+                             
+                             # 3. Convert to Image (0..1 -> 0..255)
+                             vis_map = torch.clamp(vis_map, 0, 1)
+                             vis_np = (vis_map.cpu().numpy() * 255).astype(np.uint8)
+                             vis_img = Image.fromarray(vis_np, mode='L')
+                             
+                             # Resize back to original image size
+                             vis_img = vis_img.resize(img_before.size, Image.NEAREST)
+                             
+                             # Save
+                             fail_mask_path = os.path.join(DEST_DIR, f"item_{item_idx}_bg_fail_mask.png")
+                             vis_img.save(fail_mask_path)
+                             result["results"]["global"]["fail_mask_path"] = fail_mask_path
+                         except Exception as e:
+                             import traceback
+                             traceback.print_exc()
+
+    t_end = time.time()
+    return result
+
+class AuditDataset(Dataset):
+    def __init__(self, items):
+        self.items = items
+
+    def __len__(self):
+        return len(self.items)
+
+    def __getitem__(self, idx):
+        item = self.items[idx].copy()
+        try:
+            # Preload images
+            item["img_before_obj"] = _load_image(item["img_before"])
+            item["img_after_obj"] = _load_image(item["img_after"])
+            item["load_success"] = True
+        except Exception as e:
+            item["load_error"] = str(e)
+            item["load_success"] = False
+        return item
+
+
+def collate_fn(batch):
+    return batch[0]
+
+
+def parse_log_file(log_path):
+    try:
+        with open(log_path, "r") as f:
+            data = json.load(f)
+        item_idx = data.get("item_idx")
+        item_dir = os.path.dirname(log_path)
+        if "original_item" not in data:
+            return None
+        img_before_path = data["original_item"].get("local_input_image")
+        img_after_path = data["original_item"].get("output_image")
+        if not (img_before_path and img_after_path and os.path.exists(img_before_path) and os.path.exists(img_after_path)):
+            return None
+        return {
+            "log_path": log_path,
+            "item_idx": item_idx,
+            "item_dir": item_dir,
+            "img_before": img_before_path,
+            "img_after": img_after_path,
+        }
+    except Exception:
+        return None
+
+
+def thread_worker(rank, devices, chunks):
+    device = devices[rank]
+    items = chunks[rank]
+    
+    # Determine position for tqdm based on device index (rank)
+    idx = rank
+    
+    model = None
+    processor = None
     try:
         processor = AutoImageProcessor.from_pretrained(MODEL_NAME)
-        model = AutoModel.from_pretrained(MODEL_NAME, device_map="auto")
+        model = AutoModel.from_pretrained(MODEL_NAME, torch_dtype=torch.float16)
+        model.to(device)
         model.eval()
-        return processor, model
-    except Exception as e:
-        print(f"Error loading DINOv3 model: {e}")
-        exit(1)
-
-def get_dino_features(processor, model, image, device):
-    """
-    Returns:
-        pooler_output: (1, hidden_dim) - Global CLS feature
-        patch_tokens: (1, H_grid, W_grid, hidden_dim) - Spatial features
-    """
-    # Ensure image is RGB
-    if image.mode != "RGB":
-        image = image.convert("RGB")
-        
-    inputs = processor(images=image, return_tensors="pt").to(device)
-    
-    with torch.inference_mode():
-        outputs = model(**inputs)
-        
-    pooler_output = outputs.pooler_output
-    last_hidden_state = outputs.last_hidden_state
-    
-    # Determine grid size
-    # ViT output: (Batch, Seq_Len, Dim). Seq_Len = Num_Patches + 1 (CLS)
-    
-    # Attempt to get image_size and patch_size from processor config
-    H_img = inputs['pixel_values'].shape[2]
-    W_img = inputs['pixel_values'].shape[3]
-    
-    patch_size = None
-    if hasattr(model.config, 'patch_size'):
-        patch_size = model.config.patch_size
-    elif hasattr(model.config, 'vision_config') and hasattr(model.config.vision_config, 'patch_size'):
-        patch_size = model.config.vision_config.patch_size
-    else:
-        # Fallback for patch_size if not found in config - common for ViT-B/16 is 16
-        patch_size = 16 
-
-    if patch_size == 0: 
-        raise ValueError("Patch size is zero, cannot determine grid dimensions.")
-
-    H_grid = H_img // patch_size
-    W_grid = W_img // patch_size
-    
-    expected_spatial_patches = H_grid * W_grid
-    
-    # Determine the number of special tokens to skip
-    num_cls_tokens = 1 # Always 1 CLS token
-    num_register_tokens = getattr(model.config, 'num_register_tokens', 0) # Get from config, default to 0 if not present
-    
-    start_index_for_patches = num_cls_tokens + num_register_tokens
-    
-    # Extract patch tokens (skip CLS and register tokens)
-    patch_tokens = last_hidden_state[:, start_index_for_patches:, :]
-    
-    if patch_tokens.shape[1] != expected_spatial_patches:
-        raise ValueError(f"After accounting for CLS ({num_cls_tokens}) and register tokens ({num_register_tokens}), "
-                         f"patch_tokens sequence length ({patch_tokens.shape[1]}) still does not match "
-                         f"expected spatial grid size ({expected_spatial_patches}). Cannot reshape."
-                         f"Total tokens in last_hidden_state: {last_hidden_state.shape[1]}")
-    
-    # Reshape to spatial grid
-    patch_tokens = patch_tokens.reshape(1, H_grid, W_grid, -1)
-    grid_size = H_grid # For compatibility with existing return signature which expects a single grid_size
-    
-    return pooler_output, patch_tokens, grid_size
-
-def create_masked_visualization(image, mask_image, color=(255, 0, 0), opacity=0.5):
-    """Overlays a mask on an image with a given color and opacity."""
-    if image.mode != "RGB":
-        image = image.convert("RGB")
-    if mask_image.mode != "L":
-        mask_image = mask_image.convert("L")
-
-    # Ensure mask is the same size as the image
-    if image.size != mask_image.size:
-        mask_image = mask_image.resize(image.size, Image.NEAREST)
-
-    # Create a color overlay from the mask
-    mask_arr = np.array(mask_image) > 0
-    color_overlay = np.zeros((image.height, image.width, 3), dtype=np.uint8)
-    color_overlay[mask_arr] = color
-
-    # Blend the image with the color overlay
-    image_arr = np.array(image)
-    blended_arr = image_arr.copy()
-    
-    # Apply opacity
-    blended_arr[mask_arr] = (
-        (1 - opacity) * image_arr[mask_arr] + opacity * color_overlay[mask_arr]
-    ).astype(np.uint8)
-
-    return Image.fromarray(blended_arr)
-
-def combine_images_side_by_side(img1, img2):
-    """Combines two images horizontally."""
-    if img1.size != img2.size:
-        img2 = img2.resize(img1.size, Image.LANCZOS)
-    
-    width, height = img1.size
-    combined_img = Image.new('RGB', (width * 2, height))
-    combined_img.paste(img1, (0, 0))
-    combined_img.paste(img2, (width, 0))
-    return combined_img
-
-def calculate_metrics(processor, model, img_path_a, img_path_b, mask_paths):
-    device = model.device
-    mask_img = None
-    
-    # 1. Load Images
-    try:
-        img_a = Image.open(img_path_a).convert("RGB")
-        img_b = Image.open(img_path_b).convert("RGB")
-        
-        # Ensure img_b has the same size as img_a
-        if img_a.size != img_b.size:
-            img_b = img_b.resize(img_a.size, Image.LANCZOS) # Use a good quality downsampling filter
-            
-        # Load and Merge Masks by BBox
-        merged_bbox = None
-        base_size = img_a.size # (W, H)
-
-        for mp in mask_paths:
-            if os.path.exists(mp):
-                m = Image.open(mp).convert("L")
-                # Resize to match img_a
-                if m.size != base_size:
-                    m = m.resize(base_size, Image.NEAREST)
-                m_arr = np.array(m)
-
-                # Get bbox of current mask
-                rows, cols = np.where(m_arr > 0)
-                if len(rows) == 0:
-                    continue # empty mask
-
-                x1, y1 = cols.min(), rows.min()
-                x2, y2 = cols.max(), rows.max()
-
-                if merged_bbox is None:
-                    merged_bbox = [x1, y1, x2, y2]
-                else:
-                    merged_bbox[0] = min(merged_bbox[0], x1)
-                    merged_bbox[1] = min(merged_bbox[1], y1)
-                    merged_bbox[2] = max(merged_bbox[2], x2)
-                    merged_bbox[3] = max(merged_bbox[3], y2)
-
-        if merged_bbox is None:
-            return {"error": "No valid masks with content found to create a bbox"}, None
-
-        # Create a new mask from the merged bbox
-        combined_mask_arr = np.zeros((base_size[1], base_size[0]), dtype=np.uint8)
-        x1, y1, x2, y2 = merged_bbox
-        combined_mask_arr[y1:y2+1, x1:x2+1] = 255
-        mask_img = Image.fromarray(combined_mask_arr)
         
     except Exception as e:
-        return {"error": str(e)}, None
-
-    # 2. Get Features (Original Images)
-    # Processor will handle resizing of images to model input size
-    global_a, patches_a, grid_size = get_dino_features(processor, model, img_a, device)
-    global_b, patches_b, _         = get_dino_features(processor, model, img_b, device)
-    
-    # 3. Global Similarity (Structure/Layout Check)
-    global_sim = F.cosine_similarity(global_a, global_b, dim=-1).item()
-    
-    # --- NEW: Input-level Masking Analysis ---
-    # Create BG-only and FG-only images for global comparison
-    
-    # Normalize mask to 0-1 for multiplication
-    mask_norm = combined_mask_arr.astype(float) / 255.0
-    # Binarize for clean cutting (optional, but often better for DINO to see black void)
-    mask_binary = (mask_norm > 0.5).astype(float)
-    mask_binary_inv = 1.0 - mask_binary
-    
-    # Expand to 3 channels
-    mask_3ch = np.stack([mask_binary]*3, axis=-1)
-    mask_inv_3ch = np.stack([mask_binary_inv]*3, axis=-1)
-    
-    img_a_arr = np.array(img_a).astype(float)
-    img_b_arr = np.array(img_b).astype(float)
-    
-    # Apply masks
-    # Backgrounds (Multiply by Inverse Mask)
-    img_a_bg = Image.fromarray((img_a_arr * mask_inv_3ch).astype(np.uint8))
-    img_b_bg = Image.fromarray((img_b_arr * mask_inv_3ch).astype(np.uint8))
-    
-    # Foregrounds (Multiply by Mask)
-    img_a_fg = Image.fromarray((img_a_arr * mask_3ch).astype(np.uint8))
-    img_b_fg = Image.fromarray((img_b_arr * mask_3ch).astype(np.uint8))
-    
-    # Compute features for masked inputs
-    global_a_bg, _, _ = get_dino_features(processor, model, img_a_bg, device)
-    global_b_bg, _, _ = get_dino_features(processor, model, img_b_bg, device)
-    
-    global_a_fg, _, _ = get_dino_features(processor, model, img_a_fg, device)
-    global_b_fg, _, _ = get_dino_features(processor, model, img_b_fg, device)
-    
-    input_masked_bg_sim = F.cosine_similarity(global_a_bg, global_b_bg, dim=-1).item()
-    input_masked_fg_sim = F.cosine_similarity(global_a_fg, global_b_fg, dim=-1).item()
-    
-    # -----------------------------------------
-    
-    # 4. Patch-wise Analysis (Existing Logic)
-    patch_sim_map = F.cosine_similarity(patches_a, patches_b, dim=-1) # (1, Grid, Grid)
-    
-    # 5. Align Mask to Feature Grid
-    # Resize mask to match the feature grid size
-    mask_tensor = torch.from_numpy(np.array(mask_img.resize((grid_size, grid_size), Image.NEAREST))).float().to(device) / 255.0
-    mask_tensor = mask_tensor.unsqueeze(0) # (1, Grid, Grid)
-    
-    # Binarize mask for calculation (soft threshold)
-    fg_mask = (mask_tensor > 0.5).float()
-    bg_mask = (mask_tensor <= 0.5).float()
-    
-    # 6. Calculate Scores
-    bg_area = bg_mask.sum()
-    if bg_area > 0:
-        bg_sim_score = (patch_sim_map * bg_mask).sum() / bg_area
-        bg_sim_score = bg_sim_score.item()
-    else:
-        bg_sim_score = 0.0 
-
-    fg_area = fg_mask.sum()
-    if fg_area > 0:
-        fg_sim_score = (patch_sim_map * fg_mask).sum() / fg_area
-        fg_sim_score = fg_sim_score.item()
-    else:
-        fg_sim_score = 1.0 
-
-    return {
-        "global_sim": global_sim,
-        "bg_sim": bg_sim_score,
-        "fg_sim": fg_sim_score,
-        "input_masked_bg_sim": input_masked_bg_sim,
-        "input_masked_fg_sim": input_masked_fg_sim,
-        "grid_size": grid_size
-    }, mask_img
-
-def main():
-    # Setup
-    processor, model = load_dinov3()
-    
-    # Find all log files
-    log_files = glob.glob(os.path.join(WORK_DIR, "item_*", "item_*_log.json"))
-    # Fallback to flat layout if any
-    log_files += [p for p in glob.glob(os.path.join(WORK_DIR, "item_*_log.json")) if p not in log_files]
-    
-    total_found_logs = len(log_files)
-    num_to_process = min(100, total_found_logs) # Process max 100, or all if fewer
-    
-    if num_to_process == 0:
-        print("No log files found to process. Exiting.")
+        import traceback
+        traceback.print_exc()
         return
 
-    # Randomly sample num_to_process files
-    random_log_files = random.sample(log_files, num_to_process)
-    print(f"Processing {num_to_process} randomly selected items from {total_found_logs} total logs in {WORK_DIR}")
+    # Create Dataset and DataLoader
+    dataset = AuditDataset(items)
     
-    # Create destination directory for samples
-    DEST_DIR = os.path.join("openimages", "random_100_analyzed")
-    os.makedirs(DEST_DIR, exist_ok=True)
-    print(f"Copying analyzed samples to {DEST_DIR}")
+    # Optimize DataLoader for faster I/O
+    # Calculate appropriate num_workers per GPU process
+    total_cores = os.cpu_count() or 4
+    workers_per_gpu = max(1, min(4, total_cores // len(devices)))
     
-    updated_count = 0
-    
-    for log_path in tqdm(random_log_files, desc="Verifying & Copying"):
-        with open(log_path, 'r') as f:
-            data = json.load(f)
-            
-        item_idx = data.get("item_idx")
-        merged_mask_img = None
-        item_dir = os.path.dirname(log_path)
-        
-        # Determine paths
-        if "original_item" in data:
-            img_before_path = data["original_item"].get("local_input_image")
-            img_after_path = data["original_item"].get("output_image")
-        else:
-            print(f"Skipping {log_path}: 'original_item' data missing.")
-            continue
+    loader = DataLoader(
+        dataset, 
+        batch_size=1, 
+        shuffle=False, 
+        num_workers=workers_per_gpu, 
+        collate_fn=collate_fn,
+        prefetch_factor=2,
+        persistent_workers=True,
+        pin_memory=True if torch.cuda.is_available() else False
+    )
 
-        # Find Masks (Merge if both exist)
-        mask_remove = os.path.join(item_dir, f"item_{item_idx}_MASK_REMOVE.png")
-        mask_add = os.path.join(item_dir, f"item_{item_idx}_MASK_ADD.png")
-        
-        found_masks = []
-        if os.path.exists(mask_remove): found_masks.append(mask_remove)
-        if os.path.exists(mask_add): found_masks.append(mask_add)
-            
-        if not found_masks:
-            # No mask found
-            data["dino_analysis"] = {"error": "No mask found"}
-        else:
-            if os.path.exists(img_before_path) and os.path.exists(img_after_path):
-                metrics, merged_mask_img = calculate_metrics(processor, model, img_before_path, img_after_path, found_masks)
-                data["dino_analysis"] = metrics
-            else:
-                 data["dino_analysis"] = {"error": "Source images not found"}
-        
-        # Save back to log
-        with open(log_path, 'w') as f:
-            json.dump(data, f, indent=2)
-            updated_count += 1
-            
-        # --- Copy to Test Directory ---
+    # Process items
+    for item in tqdm(loader, desc=f"GPU {idx}", position=idx, leave=True):
         try:
-            # 1. Copy Log (now contains updated analysis)
-            shutil.copy(log_path, os.path.join(DEST_DIR, f"item_{item_idx}_log.json"))
-            
-            # 2. Copy Input Image
-            if os.path.exists(img_before_path):
-                ext = os.path.splitext(img_before_path)[1]
-                shutil.copy(img_before_path, os.path.join(DEST_DIR, f"item_{item_idx}_input{ext}"))
-                
-            # 3. Copy Output Image
-            if os.path.exists(img_after_path):
-                ext = os.path.splitext(img_after_path)[1]
-                shutil.copy(img_after_path, os.path.join(DEST_DIR, f"item_{item_idx}_output{ext}"))
-                
-            # 4. Copy Mask(s)
-            for mp in found_masks:
-                mask_name = os.path.basename(mp)
-                shutil.copy(mp, os.path.join(DEST_DIR, mask_name))
+            if not item.get("load_success", False):
+                continue
 
-            # 5. Save and Copy Merged Mask
-            if merged_mask_img:
-                merged_mask_path = os.path.join(DEST_DIR, f"item_{item_idx}_MERGED_BBOX_MASK.png")
-                merged_mask_img.save(merged_mask_path)
+            img_before = item["img_before_obj"]
+            img_after = item["img_after_obj"]
 
-                # Create and save combined visualization of the mask on before and after images
-                try:
-                    if os.path.exists(img_before_path) and os.path.exists(img_after_path):
-                        img_a = Image.open(img_before_path).convert("RGB")
-                        img_b = Image.open(img_after_path).convert("RGB")
+            audit = {
+                "item_idx": item["item_idx"],
+                "log_path": item["log_path"],
+                "before_image": item["img_before"],
+                "after_image": item["img_after"],
+            }
+            # Pass the processor and model instance
+            audit.update(audit_item(processor, model, img_before, img_after, item["item_dir"], item["item_idx"], device))
 
-                        if img_a.size != img_b.size:
-                            img_b = img_b.resize(img_a.size, Image.LANCZOS)
-
-                        before_masked = create_masked_visualization(img_a, merged_mask_img)
-                        after_masked = create_masked_visualization(img_b, merged_mask_img)
-                        
-                        combined_viz = combine_images_side_by_side(before_masked, after_masked)
-                        viz_path = os.path.join(DEST_DIR, f"item_{item_idx}_MERGED_MASK_VISUALIZATION.png")
-                        combined_viz.save(viz_path)
-                except Exception as e:
-                    print(f"Error creating visualization for item {item_idx}: {e}")
-                
+            audit_path = os.path.join(DEST_DIR, f"item_{item['item_idx']}_dino_audit.json")
+            with open(audit_path, "w") as f:
+                json.dump(audit, f, indent=2)
         except Exception as e:
-            print(f"Error copying files for item {item_idx}: {e}")
+            import traceback
+            traceback.print_exc()
 
-    print(f"Finished. Updated {updated_count} logs and copied them to {DEST_DIR}.")
+
+def main():
+    devices = get_available_devices()
+    print(f"Running on {len(devices)} devices: {devices}")
+
+    # Find all log files
+    log_files = glob.glob(os.path.join(WORK_DIR, "item_*", "item_*_log.json"))
+    log_files += [p for p in glob.glob(os.path.join(WORK_DIR, "item_*_log.json")) if p not in log_files]
+    log_files = sorted(log_files)
+    if MAX_ITEMS:
+        log_files = log_files[:MAX_ITEMS]
+
+    if not log_files:
+        print(f"No log files found in {WORK_DIR}. Exiting.")
+        return
+
+    os.makedirs(DEST_DIR, exist_ok=True)
+    print(f"Processing {len(log_files)} items from {WORK_DIR}. Saving audit to {DEST_DIR}")
+
+    # Parse dataset upfront (fast enough for filenames)
+    all_items = []
+    print("Parsing logs...")
+    
+    # Use ProcessPoolExecutor to parse logs in parallel
+    # Adjust max_workers as needed, usually cpu_count is good
+    num_cpus = os.cpu_count() or 4
+    with ProcessPoolExecutor(max_workers=num_cpus) as executor:
+        futures = [executor.submit(parse_log_file, log_path) for log_path in log_files]
+        for future in tqdm(as_completed(futures), total=len(futures), desc="Parsing Logs"):
+            result = future.result()
+            if result:
+                all_items.append(result)
+
+    if not all_items:
+        print("No valid items found after parsing. Exiting.")
+        return
+
+    # Multi-threading
+    chunks = [[] for _ in range(len(devices))]
+    for i, item in enumerate(all_items):
+        chunks[i % len(devices)].append(item)
+
+    print(f"Spawning {len(devices)} processes with mp.spawn...")
+    
+    # Use mp.spawn which handles process lifecycle better
+    # Note: mp.spawn passes 'i' (rank) as the first argument automatically
+    mp.spawn(thread_worker, args=(devices, chunks), nprocs=len(devices), join=True)
+
+    print(f"Finished. Audit files saved to {DEST_DIR}.")
+
 
 if __name__ == "__main__":
     main()
