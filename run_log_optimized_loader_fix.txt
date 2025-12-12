@@ -1,0 +1,69 @@
+Running on 3 devices: ['cuda:0', 'cuda:1', 'cuda:2']
+Processing 35736 items from openimages/pico_sam_output_ALL_20251206_032609. Saving audit to openimages/dino_mask_audit
+Parsing logs...
+`torch_dtype` is deprecated! Use `dtype` instead!
+Worker cuda:0 starting. Initializing model...
+Worker cuda:0 loading model/processor...
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:01<00:06,  1.33s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:02<00:04,  1.17s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:03<00:03,  1.08s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:04<00:02,  1.10s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:05<00:01,  1.05s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:05<00:00,  1.16it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:05<00:00,  1.01it/s]
+`torch_dtype` is deprecated! Use `dtype` instead!
+Worker cuda:1 starting. Initializing model...
+Worker cuda:1 loading model/processor...
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:01<00:06,  1.25s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:02<00:04,  1.18s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:03<00:03,  1.22s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:04<00:02,  1.19s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:05<00:01,  1.19s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  1.04it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  1.08s/it]
+Worker cuda:0 model loaded on: cuda:0
+GPU 0:   0%|          | 0/11912 [00:00<?, ?it/s]`torch_dtype` is deprecated! Use `dtype` instead!
+Worker cuda:2 starting. Initializing model...
+Worker cuda:2 loading model/processor...
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:01<00:06,  1.23s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:02<00:04,  1.13s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:03<00:03,  1.25s/it]Worker cuda:1 model loaded on: cuda:1
+
+GPU 1:   0%|          | 0/11912 [00:00<?, ?it/s][ALoading checkpoint shards:  67%|██████▋   | 4/6 [00:04<00:02,  1.20s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:06<00:01,  1.33s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  1.02s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  1.13s/it]
+Worker cuda:2 model loaded on: cuda:2
+
+
+GPU 2:   0%|          | 0/11912 [00:00<?, ?it/s][A[AWARNING: Image aspect ratio mismatch for 0: 1.4993 vs 1.5000
+WARNING: Image size mismatch for 0: (1024, 683) vs (1248, 832). Resizing after_image to match before_image.
+DEBUG TIME 0: Total=1.6277s
+GPU 0:   0%|          | 1/11912 [00:42<139:05:02, 42.04s/it]Traceback (most recent call last):
+  File "/host/home/yanai-lab/Sotsuken24/xiong-p/test/qwen-image-edit/pico-banana-400k/pico-banana-400k-subject_driven/scripts/verify_background_dinov3.py", line 362, in thread_worker
+    audit.update(audit_item(processor, model, img_before, img_after, item["item_dir"], item["item_idx"], device))
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/host/home/yanai-lab/Sotsuken24/xiong-p/test/qwen-image-edit/pico-banana-400k/pico-banana-400k-subject_driven/scripts/verify_background_dinov3.py", line 120, in audit_item
+    raise ValueError(f"ERROR: Image aspect ratio significantly changed for {item_idx}: {ratio_before:.4f} vs {ratio_after:.4f}. Aborting.")
+ValueError: ERROR: Image aspect ratio significantly changed for 100: 1.0600 vs 1.0000. Aborting.
+Traceback (most recent call last):
+  File "/host/home/yanai-lab/Sotsuken24/xiong-p/test/qwen-image-edit/pico-banana-400k/pico-banana-400k-subject_driven/scripts/verify_background_dinov3.py", line 362, in thread_worker
+    audit.update(audit_item(processor, model, img_before, img_after, item["item_dir"], item["item_idx"], device))
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/host/home/yanai-lab/Sotsuken24/xiong-p/test/qwen-image-edit/pico-banana-400k/pico-banana-400k-subject_driven/scripts/verify_background_dinov3.py", line 120, in audit_item
+    raise ValueError(f"ERROR: Image aspect ratio significantly changed for {item_idx}: {ratio_before:.4f} vs {ratio_after:.4f}. Aborting.")
+ValueError: ERROR: Image aspect ratio significantly changed for 10001: 1.3196 vs 1.3704. Aborting.
+Error processing item 100 on cuda:0: ERROR: Image aspect ratio significantly changed for 100: 1.0600 vs 1.0000. Aborting.
+Error processing item 10001 on cuda:0: ERROR: Image aspect ratio significantly changed for 10001: 1.3196 vs 1.3704. Aborting.
+WARNING: Image aspect ratio mismatch for 10004: 1.4993 vs 1.5000
+WARNING: Image size mismatch for 10004: (1024, 683) vs (1248, 832). Resizing after_image to match before_image.
+DEBUG TIME 10004: Total=0.6363s
+GPU 0:   0%|          | 4/11912 [00:42<26:55:11,  8.14s/it] WARNING: Image aspect ratio mismatch for 10007: 1.4993 vs 1.5000
+WARNING: Image size mismatch for 10007: (1024, 683) vs (1248, 832). Resizing after_image to match before_image.
+DEBUG TIME 10007: Total=0.6210s
+GPU 0:   0%|          | 5/11912 [00:43<20:02:05,  6.06s/it]WARNING: Image aspect ratio mismatch for 1001: 1.3333 vs 1.3704
+WARNING: Image size mismatch for 1001: (1024, 768) vs (1184, 864). Resizing after_image to match before_image.
+DEBUG TIME 1001: Total=0.5841s
+GPU 0:   0%|          | 6/11912 [00:44<14:54:32,  4.51s/it]WARNING: Image aspect ratio mismatch for 10012: 0.7500 vs 0.7297
+WARNING: Image size mismatch for 10012: (768, 1024) vs (864, 1184). Resizing after_image to match before_image.
+DEBUG TIME 10012: Total=0.6511s
+GPU 0:   0%|          | 7/11912 [00:44<11:14:10,  3.40s/it]WARNING: Image aspect ratio mismatch for 10015: 1.5037 vs 1.5000
+WARNING: Image size mismatch for 10015: (1024, 681) vs (1248, 832). Resizing after_image to match before_image.
+DEBUG TIME 10015: Total=0.4310s
+GPU 0:   0%|          | 8/11912 [00:45<8:23:09,  2.54s/it] DEBUG TIME 10018: Total=0.4676s
+GPU 0:   0%|          | 9/11912 [00:45<6:23:41,  1.93s/it]WARNING: Image aspect ratio mismatch for 10020: 1.3333 vs 1.3704
+WARNING: Image size mismatch for 10020: (1024, 768) vs (1184, 864). Resizing after_image to match before_image.
+DEBUG TIME 10020: Total=0.7868s
+GPU 0:   0%|          | 10/11912 [00:46<5:17:09,  1.60s/it]WARNING: Image aspect ratio mismatch for 10023: 1.5015 vs 1.5000
+WARNING: Image size mismatch for 10023: (1024, 682) vs (1248, 832). Resizing after_image to match before_image.
+DEBUG TIME 10023: Total=0.5311s
+GPU 0:   0%|          | 11/11912 [00:46<4:14:50,  1.28s/it]WARNING: Image aspect ratio mismatch for 10026: 1.4993 vs 1.5000
+WARNING: Image size mismatch for 10026: (1024, 683) vs (1248, 832). Resizing after_image to match before_image.
+WARNING: Image aspect ratio mismatch for 1: 0.6963 vs 0.6667
+WARNING: Image size mismatch for 1: (713, 1024) vs (832, 1248). Resizing after_image to match before_image.
+DEBUG TIME 10026: Total=0.8673s
+GPU 0:   0%|          | 12/11912 [00:47<3:50:17,  1.16s/it]WARNING: Image aspect ratio mismatch for 10029: 1.3333 vs 1.3704
+WARNING: Image size mismatch for 10029: (1024, 768) vs (1184, 864). Resizing after_image to match before_image.

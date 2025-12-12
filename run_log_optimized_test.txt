@@ -1,0 +1,77 @@
+Running on 3 devices: ['cuda:0', 'cuda:1', 'cuda:2']
+Processing 10 items from openimages/pico_sam_output_ALL_20251206_032609. Saving audit to openimages/dino_mask_audit
+Parsing logs...
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+Worker cuda:2 starting. Initializing model...
+Worker cuda:2 loading model/processor...
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Worker cuda:1 starting. Initializing model...
+Worker cuda:1 loading model/processor...
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Worker cuda:0 starting. Initializing model...
+Worker cuda:0 loading model/processor...
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:02<00:11,  2.35s/it]Loading checkpoint shards:  17%|█▋        | 1/6 [00:02<00:11,  2.34s/it]Loading checkpoint shards:  17%|█▋        | 1/6 [00:02<00:12,  2.45s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:04<00:09,  2.34s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:04<00:09,  2.43s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:05<00:10,  2.54s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:07<00:07,  2.45s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:07<00:07,  2.57s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:07<00:07,  2.64s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:09<00:04,  2.38s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:09<00:04,  2.34s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:09<00:04,  2.42s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:12<00:02,  2.57s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:12<00:02,  2.61s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:12<00:02,  2.48s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:13<00:00,  2.05s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:13<00:00,  2.25s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:13<00:00,  2.02s/it]
+Loading checkpoint shards: 100%|██████████| 6/6 [00:13<00:00,  2.25s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:13<00:00,  1.96s/it]
+Loading checkpoint shards: 100%|██████████| 6/6 [00:13<00:00,  2.25s/it]
+Worker cuda:2 model loaded on: cuda:2
+
+
+GPU 2:   0%|          | 0/3 [00:00<?, ?it/s][A[AWARNING: Image aspect ratio mismatch for 10: 0.6699 vs 0.6667
+WARNING: Image size mismatch for 10: (686, 1024) vs (832, 1248). Resizing after_image to match before_image.
+Worker cuda:0 model loaded on: cuda:0
+GPU 0:   0%|          | 0/4 [00:00<?, ?it/s]WARNING: Image aspect ratio mismatch for 0: 1.4993 vs 1.5000
+WARNING: Image size mismatch for 0: (1024, 683) vs (1248, 832). Resizing after_image to match before_image.
+DEBUG TIME 10: Total=1.4889s
+
+
+GPU 2:  33%|███▎      | 1/3 [00:01<00:03,  1.59s/it][A[ATraceback (most recent call last):
+  File "/host/home/yanai-lab/Sotsuken24/xiong-p/test/qwen-image-edit/pico-banana-400k/pico-banana-400k-subject_driven/scripts/verify_background_dinov3.py", line 326, in thread_worker
+    audit.update(audit_item(processor, model, img_before, img_after, item["item_dir"], item["item_idx"], device))
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/host/home/yanai-lab/Sotsuken24/xiong-p/test/qwen-image-edit/pico-banana-400k/pico-banana-400k-subject_driven/scripts/verify_background_dinov3.py", line 119, in audit_item
+    raise ValueError(f"ERROR: Image aspect ratio significantly changed for {item_idx}: {ratio_before:.4f} vs {ratio_after:.4f}. Aborting.")
+ValueError: ERROR: Image aspect ratio significantly changed for 10000: 1.0524 vs 1.0000. Aborting.
+Error processing item 10000 on cuda:2: ERROR: Image aspect ratio significantly changed for 10000: 1.0524 vs 1.0000. Aborting.
+WARNING: Image aspect ratio mismatch for 10003: 1.3351 vs 1.3704
+WARNING: Image size mismatch for 10003: (1024, 767) vs (1184, 864). Resizing after_image to match before_image.
+Worker cuda:1 model loaded on: cuda:1
+
+GPU 1:   0%|          | 0/3 [00:00<?, ?it/s][AWARNING: Image aspect ratio mismatch for 1: 0.6963 vs 0.6667
+WARNING: Image size mismatch for 1: (713, 1024) vs (832, 1248). Resizing after_image to match before_image.
+DEBUG TIME 10003: Total=0.6874s
+DEBUG TIME 0: Total=1.1597s
+
+
+GPU 2: 100%|██████████| 3/3 [00:02<00:00,  1.38it/s]GPU 0:  25%|██▌       | 1/4 [00:01<00:03,  1.23s/it][A[AGPU 2: 100%|██████████| 3/3 [00:02<00:00,  1.23it/s]
+Traceback (most recent call last):
+  File "/host/home/yanai-lab/Sotsuken24/xiong-p/test/qwen-image-edit/pico-banana-400k/pico-banana-400k-subject_driven/scripts/verify_background_dinov3.py", line 326, in thread_worker
+    audit.update(audit_item(processor, model, img_before, img_after, item["item_dir"], item["item_idx"], device))
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/host/home/yanai-lab/Sotsuken24/xiong-p/test/qwen-image-edit/pico-banana-400k/pico-banana-400k-subject_driven/scripts/verify_background_dinov3.py", line 119, in audit_item
+    raise ValueError(f"ERROR: Image aspect ratio significantly changed for {item_idx}: {ratio_before:.4f} vs {ratio_after:.4f}. Aborting.")
+ValueError: ERROR: Image aspect ratio significantly changed for 100: 1.0600 vs 1.0000. Aborting.
+Traceback (most recent call last):
+  File "/host/home/yanai-lab/Sotsuken24/xiong-p/test/qwen-image-edit/pico-banana-400k/pico-banana-400k-subject_driven/scripts/verify_background_dinov3.py", line 326, in thread_worker
+    audit.update(audit_item(processor, model, img_before, img_after, item["item_dir"], item["item_idx"], device))
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/host/home/yanai-lab/Sotsuken24/xiong-p/test/qwen-image-edit/pico-banana-400k/pico-banana-400k-subject_driven/scripts/verify_background_dinov3.py", line 119, in audit_item
+    raise ValueError(f"ERROR: Image aspect ratio significantly changed for {item_idx}: {ratio_before:.4f} vs {ratio_after:.4f}. Aborting.")
+ValueError: ERROR: Image aspect ratio significantly changed for 10001: 1.3196 vs 1.3704. Aborting.
+GPU 0:  75%|███████▌  | 3/4 [00:01<00:00,  2.70it/s]Error processing item 100 on cuda:0: ERROR: Image aspect ratio significantly changed for 100: 1.0600 vs 1.0000. Aborting.
+Error processing item 10001 on cuda:0: ERROR: Image aspect ratio significantly changed for 10001: 1.3196 vs 1.3704. Aborting.
+WARNING: Image aspect ratio mismatch for 10004: 1.4993 vs 1.5000
+WARNING: Image size mismatch for 10004: (1024, 683) vs (1248, 832). Resizing after_image to match before_image.
+DEBUG TIME 10004: Total=0.6177s
+GPU 0: 100%|██████████| 4/4 [00:02<00:00,  2.10it/s]GPU 0: 100%|██████████| 4/4 [00:02<00:00,  1.95it/s]
+DEBUG TIME 1: Total=1.8876s
+
+GPU 1:  33%|███▎      | 1/3 [00:01<00:03,  1.99s/it][AWARNING: Image aspect ratio mismatch for 1000: 1.3333 vs 1.3704
+WARNING: Image size mismatch for 1000: (1024, 768) vs (1184, 864). Resizing after_image to match before_image.
+DEBUG TIME 1000: Total=0.6949s
+
+GPU 1:  67%|██████▋   | 2/3 [00:02<00:01,  1.27s/it][AWARNING: Image aspect ratio mismatch for 10002: 1.4993 vs 1.5000
+WARNING: Image size mismatch for 10002: (1024, 683) vs (1248, 832). Resizing after_image to match before_image.
+DEBUG TIME 10002: Total=0.3949s
+
+GPU 1: 100%|██████████| 3/3 [00:03<00:00,  1.11it/s][AGPU 1: 100%|██████████| 3/3 [00:03<00:00,  1.08s/it]
+Finished. Audit files saved to openimages/dino_mask_audit.

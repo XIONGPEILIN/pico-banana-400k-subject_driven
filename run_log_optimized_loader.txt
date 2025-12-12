@@ -1,0 +1,154 @@
+Running on 3 devices: ['cuda:0', 'cuda:1', 'cuda:2']
+Processing 35716 items from openimages/pico_sam_output_ALL_20251206_032609. Saving audit to openimages/dino_mask_audit
+Parsing logs...
+`torch_dtype` is deprecated! Use `dtype` instead!
+Worker cuda:0 starting. Initializing model...
+Worker cuda:0 loading model/processor...
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:01<00:06,  1.36s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:02<00:05,  1.31s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:03<00:03,  1.16s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:04<00:02,  1.09s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:05<00:01,  1.10s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  1.13it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  1.03s/it]
+`torch_dtype` is deprecated! Use `dtype` instead!
+Worker cuda:1 starting. Initializing model...
+Worker cuda:1 loading model/processor...
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:01<00:05,  1.07s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:02<00:04,  1.07s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:03<00:03,  1.01s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:04<00:02,  1.09s/it]Worker cuda:0 model loaded on: cuda:0
+GPU 0:   0%|          | 0/11906 [00:00<?, ?it/s]GPU 0:   0%|          | 0/11906 [00:00<?, ?it/s]
+Process Process-1:
+Traceback (most recent call last):
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/host/home/yanai-lab/Sotsuken24/xiong-p/test/qwen-image-edit/pico-banana-400k/pico-banana-400k-subject_driven/scripts/verify_background_dinov3.py", line 345, in thread_worker
+    for item in tqdm(loader, desc=f"GPU {idx}", position=idx, leave=True):
+                ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/export/ssd2/xiong-p/env/dino/.venv/lib/python3.13/site-packages/tqdm/std.py", line 1181, in __iter__
+    for obj in iterable:
+               ^^^^^^^^
+  File "/export/ssd2/xiong-p/env/dino/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py", line 494, in __iter__
+    return self._get_iterator()
+           ~~~~~~~~~~~~~~~~~~^^
+  File "/export/ssd2/xiong-p/env/dino/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py", line 427, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+  File "/export/ssd2/xiong-p/env/dino/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py", line 1170, in __init__
+    w.start()
+    ~~~~~~~^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+                  ~~~~~~~~~~~^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/context.py", line 289, in _Popen
+    return Popen(process_obj)
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/popen_spawn_posix.py", line 32, in __init__
+    super().__init__(process_obj)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/popen_fork.py", line 20, in __init__
+    self._launch(process_obj)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/popen_spawn_posix.py", line 47, in _launch
+    reduction.dump(process_obj, fp)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/reduction.py", line 60, in dump
+    ForkingPickler(file, protocol).dump(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+AttributeError: Can't get local object 'thread_worker.<locals>.collate_fn'
+Loading checkpoint shards:  83%|████████▎ | 5/6 [00:05<00:01,  1.05s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:05<00:00,  1.18it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:05<00:00,  1.05it/s]
+`torch_dtype` is deprecated! Use `dtype` instead!
+Worker cuda:2 starting. Initializing model...
+Worker cuda:2 loading model/processor...
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:01<00:05,  1.05s/it]Worker cuda:1 model loaded on: cuda:1
+
+GPU 1:   0%|          | 0/11905 [00:00<?, ?it/s][AGPU 1:   0%|          | 0/11905 [00:00<?, ?it/s]
+Process Process-2:
+Traceback (most recent call last):
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/host/home/yanai-lab/Sotsuken24/xiong-p/test/qwen-image-edit/pico-banana-400k/pico-banana-400k-subject_driven/scripts/verify_background_dinov3.py", line 345, in thread_worker
+    for item in tqdm(loader, desc=f"GPU {idx}", position=idx, leave=True):
+                ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/export/ssd2/xiong-p/env/dino/.venv/lib/python3.13/site-packages/tqdm/std.py", line 1181, in __iter__
+    for obj in iterable:
+               ^^^^^^^^
+  File "/export/ssd2/xiong-p/env/dino/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py", line 494, in __iter__
+    return self._get_iterator()
+           ~~~~~~~~~~~~~~~~~~^^
+  File "/export/ssd2/xiong-p/env/dino/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py", line 427, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+  File "/export/ssd2/xiong-p/env/dino/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py", line 1170, in __init__
+    w.start()
+    ~~~~~~~^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+                  ~~~~~~~~~~~^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/context.py", line 289, in _Popen
+    return Popen(process_obj)
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/popen_spawn_posix.py", line 32, in __init__
+    super().__init__(process_obj)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/popen_fork.py", line 20, in __init__
+    self._launch(process_obj)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/popen_spawn_posix.py", line 47, in _launch
+    reduction.dump(process_obj, fp)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/reduction.py", line 60, in dump
+    ForkingPickler(file, protocol).dump(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+AttributeError: Can't get local object 'thread_worker.<locals>.collate_fn'
+Loading checkpoint shards:  33%|███▎      | 2/6 [00:02<00:04,  1.07s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:03<00:03,  1.02s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:04<00:02,  1.10s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:05<00:01,  1.07s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:05<00:00,  1.15it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:05<00:00,  1.03it/s]
+Worker cuda:2 model loaded on: cuda:2
+
+
+GPU 2:   0%|          | 0/11905 [00:00<?, ?it/s][A[AGPU 2:   0%|          | 0/11905 [00:00<?, ?it/s]
+Process Process-3:
+Traceback (most recent call last):
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/host/home/yanai-lab/Sotsuken24/xiong-p/test/qwen-image-edit/pico-banana-400k/pico-banana-400k-subject_driven/scripts/verify_background_dinov3.py", line 345, in thread_worker
+    for item in tqdm(loader, desc=f"GPU {idx}", position=idx, leave=True):
+                ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/export/ssd2/xiong-p/env/dino/.venv/lib/python3.13/site-packages/tqdm/std.py", line 1181, in __iter__
+    for obj in iterable:
+               ^^^^^^^^
+  File "/export/ssd2/xiong-p/env/dino/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py", line 494, in __iter__
+    return self._get_iterator()
+           ~~~~~~~~~~~~~~~~~~^^
+  File "/export/ssd2/xiong-p/env/dino/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py", line 427, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+  File "/export/ssd2/xiong-p/env/dino/.venv/lib/python3.13/site-packages/torch/utils/data/dataloader.py", line 1170, in __init__
+    w.start()
+    ~~~~~~~^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+                  ~~~~~~~~~~~^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/context.py", line 289, in _Popen
+    return Popen(process_obj)
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/popen_spawn_posix.py", line 32, in __init__
+    super().__init__(process_obj)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/popen_fork.py", line 20, in __init__
+    self._launch(process_obj)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/popen_spawn_posix.py", line 47, in _launch
+    reduction.dump(process_obj, fp)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/yanai-lab/xiong-p/.local/share/uv/python/cpython-3.13.9-linux-x86_64-gnu/lib/python3.13/multiprocessing/reduction.py", line 60, in dump
+    ForkingPickler(file, protocol).dump(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+AttributeError: Can't get local object 'thread_worker.<locals>.collate_fn'
+Finished. Audit files saved to openimages/dino_mask_audit.
